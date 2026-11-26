@@ -11,3 +11,6 @@ src/Xibalbalabs.Enumeration.Tests/obj/
 src/Xibalbalabs.Enumeration/.vs/
 src/Xibalbalabs.Enumeration/bin/
 src/Xibalbalabs.Enumeration/obj/
+
+# NuGet pack output
+artifacts/
