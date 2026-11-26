@@ -1,0 +1,13 @@
+src/Xibalbalabs.Enumeration.AspNetCore/bin/
+src/Xibalbalabs.Enumeration.AspNetCore/obj/
+src/Xibalbalabs.Enumeration.Dapper/bin/
+src/Xibalbalabs.Enumeration.Dapper/obj/
+src/Xibalbalabs.Enumeration.EntityFrameworkCore/bin/
+src/Xibalbalabs.Enumeration.EntityFrameworkCore/obj/
+src/Xibalbalabs.Enumeration.Json/bin/
+src/Xibalbalabs.Enumeration.Json/obj/
+src/Xibalbalabs.Enumeration.Tests/bin/
+src/Xibalbalabs.Enumeration.Tests/obj/
+src/Xibalbalabs.Enumeration/.vs/
+src/Xibalbalabs.Enumeration/bin/
+src/Xibalbalabs.Enumeration/obj/
