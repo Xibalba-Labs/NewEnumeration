@@ -1,19 +1,23 @@
-# Migrating from Headspring.Enumeration to Xibalbalabs.Enumeration
+# Migrating from a legacy enumeration package to Xibalbalabs.Enumeration
 
-This guide explains how to move an existing codebase off the legacy **Headspring.Enumeration** NuGet package
+This guide explains how to move an existing codebase off the legacy enumeration NuGet package
 and onto **Xibalbalabs.Enumeration** — a modern, actively maintained, drop-in replacement that supports
 .NET Standard 2.0 through .NET 9+, Native AOT, `System.Text.Json`, EF Core, Dapper, and ASP.NET Core model
 validation.
 
 There are two supported migration paths:
 
-- **Path A — Zero-effort swap.** Replace the package reference only. Your existing `Headspring.Enumeration<...>`
+- **Path A — Zero-effort swap.** Replace the package reference only. Your existing `Enumeration<...>`
   classes keep compiling and behaving exactly as before, via an `[Obsolete]` compatibility shim.
 - **Path B — Full migration.** Additionally repoint your `using` directives at the new namespace and adopt the
   new APIs (safe parsing, case-insensitive lookups, JSON/EF Core/Dapper integrations, etc.).
 
 You can do Path A today and Path B incrementally, file by file, whenever convenient — the two coexist without
 conflict.
+
+> **Note:** throughout this guide, `<LegacyNamespace>` stands for the namespace your code currently imports
+> from the legacy package (the one in your existing `using` directives). The compatibility shim re-declares
+> its types under that same namespace, which is why no source changes are needed in Path A.
 
 ---
 
@@ -39,7 +43,7 @@ conflict.
 
 ## 1. Why migrate
 
-`Headspring.Enumeration` has been unmaintained for years: no .NET Standard 2.1/`.NET 5+` support statement,
+The legacy package has been unmaintained for years: no .NET Standard 2.1/`.NET 5+` support statement,
 no Native AOT compatibility, no `System.Text.Json` converters, no EF Core `ValueConverter`, no Dapper
 `TypeHandler`, and no case-insensitive/try-pattern APIs that avoid `try`/`catch` in hot paths.
 
@@ -54,15 +58,15 @@ Core validation).
 
 If you just want your existing code to keep compiling with no source changes:
 
-1. Remove the reference to `Headspring.Enumeration`.
+1. Remove the reference to the legacy package.
 2. Add a reference to `Xibalbalabs.Enumeration`.
 3. Build. That's it — nothing else should need to change.
 
-This works because the package ships a compatibility shim in the `Headspring` namespace
+This works because the package ships a compatibility shim in the legacy package's original namespace (written `<LegacyNamespace>` below)
 (`src/Xibalbalabs.Enumeration/Legacy/Enumeration.cs`) that mirrors **both** original generic shapes:
 
 ```csharp
-namespace Headspring
+namespace <LegacyNamespace>
 {
     // The int-backed shorthand, e.g. `class OrderStatus : Enumeration<OrderStatus>`
     public abstract class Enumeration<TEnumeration> : Xibalbalabs.Enumeration.Core.Enumeration<TEnumeration>
@@ -75,7 +79,7 @@ namespace Headspring
 }
 ```
 
-Both classes are marked `[Obsolete("Headspring.Enumeration is legacy. Consider migrating namespaces to
+Both classes are marked `[Obsolete("This legacy enumeration API is obsolete. Consider migrating namespaces to
 Xibalbalabs.Enumeration.Core in the future.")]` — a **warning**, not an error, so your build keeps succeeding.
 You'll see the warning at every declaration site (e.g. `class OrderStatus : Enumeration<OrderStatus>`), which
 is a useful, low-pressure reminder to move to Path B whenever you get to it.
@@ -97,7 +101,7 @@ time:
 **Before:**
 
 ```csharp
-using Headspring;
+using <LegacyNamespace>;
 
 public sealed class OrderStatus : Enumeration<OrderStatus>
 {
@@ -126,7 +130,7 @@ The only change is the `using` directive — the class body, base type name, and
 The same applies to a two-parameter, non-`int`-backed enumeration:
 
 ```csharp
-// Before: using Headspring;
+// Before: using <LegacyNamespace>;
 // After:
 using Xibalbalabs.Enumeration.Core;
 
@@ -140,7 +144,7 @@ public sealed class CountryCode : Enumeration<CountryCode, string>
 ```
 
 Because both namespaces expose a type literally named `Enumeration<...>`, **do not** have both
-`using Headspring;` and `using Xibalbalabs.Enumeration.Core;` in the same file — that reintroduces exactly
+`using <LegacyNamespace>;` and `using Xibalbalabs.Enumeration.Core;` in the same file — that reintroduces exactly
 the kind of ambiguity discussed in [§7](#7-known-gotchas-and-edge-cases). Migrate one `using` per file, not
 partially.
 
@@ -156,7 +160,7 @@ Once migrated, also consider:
 
 ## 4. API compatibility matrix
 
-| Original Headspring member | Status after migration | Notes |
+| Original member | Status after migration | Notes |
 |---|---|---|
 | `Enumeration<TEnumeration>` (int-backed shorthand) | ✅ Identical | Same constructor signature `(int value, string displayName)` |
 | `Enumeration<TEnumeration, TValue>` (generic form) | ✅ Identical | Same constructor signature `(TValue value, string displayName)` |
@@ -176,16 +180,16 @@ Once migrated, also consider:
 | `(TValue)` explicit cast | ✅ **New**, available for every `TValue` | Not in the original package |
 | `(string)` explicit cast to `DisplayName` | ✅ **New**, available for `int`-backed enumerations only | See [§7](#7-known-gotchas-and-edge-cases) |
 
-Nothing that compiled and worked against `Headspring.Enumeration` needs to change in Path A. Path B is a pure
+Nothing that compiled and worked against the legacy package needs to change in Path A. Path B is a pure
 `using`-directive change plus optional adoption of new members — it never removes anything.
 
 ---
 
 ## 5. New capabilities available after migrating
 
-These are additive — none of them existed in `Headspring.Enumeration`. All are on the `Core`
+These are additive — none of them existed in the legacy package. All are on the `Core`
 (`Xibalbalabs.Enumeration.Core`) types unless noted otherwise, so they're only reachable once you've moved a
-class to Path B (they are **not** exposed through the `Headspring` compatibility shim's obsolete surface,
+class to Path B (they are **not** exposed through the legacy compatibility shim's obsolete surface,
 though the shim classes do inherit the same base and therefore do get them too — see the table above).
 
 ### 5.1 Safe parsing & case-insensitive lookups
@@ -359,7 +363,7 @@ returns the underlying `Value`, and there's no operator overload for `someEnum =
 `someEnum.Value == "US"`, `someEnum == CountryCode.US`, or `someEnum.Equals(CountryCode.US)` instead. Ordinary
 `== null` / `!= null` comparisons work exactly as expected in every case.
 
-### 7.2 Don't mix `Headspring` and `Xibalbalabs.Enumeration.Core` usings in the same file
+### 7.2 Don't mix `<LegacyNamespace>` and `Xibalbalabs.Enumeration.Core` usings in the same file
 
 Both namespaces declare a type literally named `Enumeration<...>`. Having both `using` directives in one file
 makes any unqualified `Enumeration<...>` reference ambiguous. Migrate a whole file's `using` directive at
@@ -382,11 +386,11 @@ asserts on the literal message string rather than just the exception type, updat
 
 ## 8. Step-by-step checklist
 
-- [ ] Remove the `Headspring.Enumeration` package reference from every project that has it.
+- [ ] Remove the legacy package reference from every project that has it.
 - [ ] Add a reference to `Xibalbalabs.Enumeration` in those same projects.
 - [ ] Build the solution. Confirm it succeeds (expect `[Obsolete]` warnings, not errors) — this is Path A,
       done.
-- [ ] For each file with a warning, when convenient: replace `using Headspring;` with
+- [ ] For each file with a warning, when convenient: replace `using <LegacyNamespace>;` with
       `using Xibalbalabs.Enumeration.Core;` and rebuild that project. This is Path B for that file.
 - [ ] Replace any `try { FromValue(...) } catch { ... }` fallback pattern with `TryFromValue`/
       `FromValueOrDefault` (and the `*Name*` equivalents where you parse display names).
@@ -416,9 +420,9 @@ No. `Value`/`DisplayName` semantics, `FromValue`/`Parse` matching rules, and `To
 unchanged. Existing serialized/stored data is fully compatible.
 
 **Does this affect binary compatibility for already-compiled consumers?**
-The Headspring shim's public members are IL-equivalent to the original package (nullable annotations are
+The legacy shim's public members are IL-equivalent to the original package (nullable annotations are
 metadata-only and don't change method signatures at the CLR level), so already-compiled assemblies referencing
-the old `Headspring.Enumeration.dll` are unaffected by this migration; you only need to rebuild the projects
+the old legacy assembly are unaffected by this migration; you only need to rebuild the projects
 whose source code you actually change.
 
 **What if I need `==` against the raw value for a non-`int` enumeration?**
@@ -427,6 +431,6 @@ Use `.Value` explicitly: `someEnum.Value == "US"`. This is one line longer than 
 [§7.1](#71-direct-comparison-to-the-underlying-value-is-int-only).
 
 **Where do I ask questions or report a compatibility gap?**
-Open an issue against this repository describing the exact `Headspring.Enumeration` usage that doesn't
+Open an issue against this repository describing the exact legacy-package usage that doesn't
 compile or behave identically after the swap — true drop-in compatibility for both generic shapes is a
 explicit design goal, so any gap is treated as a bug.

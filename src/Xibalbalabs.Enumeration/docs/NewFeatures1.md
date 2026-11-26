@@ -1,6 +1,6 @@
 Act as a Lead C#/.NET Software Architect and NuGet Library Author.
 
-We are enhancing our custom open-source Enumeration library (a modern, drop-in replacement for Headspring.Enumeration built on .NET Standard 2.0). The core replica of Headspring is already complete. Now, implement all the following value-added features to turn this library into a modern, production-ready, zero-allocation ecosystem for modern .NET (.NET Standard 2.0 through .NET 9+).
+We are enhancing our custom open-source Enumeration library (a modern, drop-in replacement for a legacy enumeration package built on .NET Standard 2.0). The core replica of the legacy API is already complete. Now, implement all the following value-added features to turn this library into a modern, production-ready, zero-allocation ecosystem for modern .NET (.NET Standard 2.0 through .NET 9+).
 
 Ensure that all code strictly follows modern C# standards:
 - Use file-scoped namespaces (`namespace MyEnumLibrary.Core;`).

@@ -1,4 +1,4 @@
-#pragma warning disable CS0618 // intentionally exercising the obsolete Headspring-compat shim
+#pragma warning disable CS0618 // intentionally exercising the obsolete legacy-compat shim
 
 using Headspring;
 

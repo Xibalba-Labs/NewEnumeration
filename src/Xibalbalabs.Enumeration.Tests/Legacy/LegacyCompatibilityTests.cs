@@ -1,4 +1,4 @@
-#pragma warning disable CS0618 // intentionally exercising the obsolete Headspring-compat shim
+#pragma warning disable CS0618 // intentionally exercising the obsolete legacy-compat shim
 
 using Xibalbalabs.Enumeration.Tests.TestFixtures;
 using Xunit;
@@ -6,12 +6,12 @@ using Xunit;
 namespace Xibalbalabs.Enumeration.Tests.Legacy;
 
 /// <summary>
-/// Regression tests for true drop-in compatibility with the original Headspring.Enumeration package:
+/// Regression tests for true drop-in compatibility with the original legacy enumeration package:
 /// a consumer must be able to swap the old DLL reference for this one and recompile without further
 /// changes, whether their enumeration derives from the single-generic-parameter (int-backed) shorthand
 /// or the fully generic two-parameter base.
 /// </summary>
-public sealed class HeadspringCompatibilityTests
+public sealed class LegacyCompatibilityTests
 {
     [Fact]
     public void SingleParamShim_SupportsFromInt32AndTryFromInt32()
