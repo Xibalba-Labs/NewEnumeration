@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net8.0;net9.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Xibalbalabs.Enumeration.AspNetCore</PackageId>
+    <Title>ASP.NET Core model validation for Xibalbalabs.Enumeration</Title>
+    <Description>A DataAnnotations ValidationAttribute that validates a DTO property/parameter value against an Xibalbalabs.Enumeration smart enum.</Description>
+    <PackageTags>enumeration;enum;smart-enum;aspnetcore;validation;dataannotations</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Xibalbalabs.Enumeration\Xibalbalabs.Enumeration.csproj" />
+  </ItemGroup>
+
+</Project>
