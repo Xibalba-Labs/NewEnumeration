@@ -359,7 +359,7 @@ namespace Xibalbalabs.Enumeration.Core
         }
 
         /// <summary>
-        /// Returns the enumeration instance whose <see cref="DisplayName"/> equals <paramref name="displayName"/>. Kept for backward compatibility with Headspring.Enumeration.
+        /// Returns the enumeration instance whose <see cref="DisplayName"/> equals <paramref name="displayName"/>. Kept for backward compatibility with the legacy enumeration API.
         /// </summary>
         /// <exception cref="ArgumentException">No matching instance was found.</exception>
         public static TEnumeration Parse(string displayName)
@@ -368,7 +368,7 @@ namespace Xibalbalabs.Enumeration.Core
         }
 
         /// <summary>
-        /// Attempts to return the enumeration instance whose <see cref="Value"/> equals <paramref name="value"/>. Kept for backward compatibility with Headspring.Enumeration.
+        /// Attempts to return the enumeration instance whose <see cref="Value"/> equals <paramref name="value"/>. Kept for backward compatibility with the legacy enumeration API.
         /// </summary>
         public static bool TryParse(TValue value, out TEnumeration result)
         {
@@ -378,7 +378,7 @@ namespace Xibalbalabs.Enumeration.Core
         }
 
         /// <summary>
-        /// Attempts to return the enumeration instance whose <see cref="DisplayName"/> equals <paramref name="displayName"/>. Kept for backward compatibility with Headspring.Enumeration.
+        /// Attempts to return the enumeration instance whose <see cref="DisplayName"/> equals <paramref name="displayName"/>. Kept for backward compatibility with the legacy enumeration API.
         /// </summary>
         public static bool TryParse(string displayName, out TEnumeration result)
         {

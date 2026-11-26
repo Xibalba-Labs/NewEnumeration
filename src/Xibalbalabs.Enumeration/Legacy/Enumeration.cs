@@ -2,7 +2,7 @@ using System;
 
 namespace Headspring
 {
-    [Obsolete("Headspring.Enumeration is legacy. Consider migrating namespaces to Xibalbalabs.Enumeration.Core in the future.")]
+    [Obsolete("This legacy enumeration API is obsolete. Consider migrating namespaces to Xibalbalabs.Enumeration.Core in the future.")]
     public abstract class Enumeration<
 #if NET5_0_OR_GREATER
         [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicFields)]
@@ -13,7 +13,7 @@ namespace Headspring
         protected Enumeration(int value, string displayName) : base(value, displayName) { }
     }
 
-    [Obsolete("Headspring.Enumeration is legacy. Consider migrating namespaces to Xibalbalabs.Enumeration.Core in the future.")]
+    [Obsolete("This legacy enumeration API is obsolete. Consider migrating namespaces to Xibalbalabs.Enumeration.Core in the future.")]
     public abstract class Enumeration<
 #if NET5_0_OR_GREATER
         [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicFields)]

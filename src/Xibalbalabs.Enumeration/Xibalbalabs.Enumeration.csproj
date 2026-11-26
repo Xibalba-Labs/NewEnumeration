@@ -11,8 +11,8 @@
   </PropertyGroup>
 	<PropertyGroup>
 		<PackageId>Xibalbalabs.Enumeration</PackageId>
-		<Title>Modern Enumeration (Headspring.Enumeration Drop-in Replacement)</Title>
-		<Description>A high-performance, modern .NET Standard 2.0 / .NET 9 replacement for the legacy Headspring.Enumeration library. Supports System.Text.Json, Native AOT, and EF Core with 100% backward compatibility.</Description>
-		<PackageTags>headspring;enumeration;enum;smart-enum;strongly-typed-enum;domain-driven-design;ddd;value-object;legacy-replacement</PackageTags>
+		<Title>Xibalbalabs.Enumeration - Modern Smart Enums for .NET</Title>
+		<Description>A high-performance, modern .NET Standard 2.0 / .NET 9 smart enum library and drop-in replacement for legacy enumeration packages. Supports System.Text.Json, Native AOT and EF Core with backward-compatible APIs.</Description>
+		<PackageTags>enumeration;enum;smart-enum;strongly-typed-enum;domain-driven-design;ddd;value-object;legacy-replacement</PackageTags>
 	</PropertyGroup>
 </Project>
