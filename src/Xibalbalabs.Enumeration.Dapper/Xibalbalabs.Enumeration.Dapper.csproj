@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net8.0;net9.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Xibalbalabs.Enumeration.Dapper</PackageId>
+    <Title>Dapper type handler for Xibalbalabs.Enumeration</Title>
+    <Description>A Dapper SqlMapper.TypeHandler that maps Xibalbalabs.Enumeration smart enums to/from their underlying value.</Description>
+    <PackageTags>enumeration;enum;smart-enum;dapper;type-handler</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Xibalbalabs.Enumeration\Xibalbalabs.Enumeration.csproj" />
+  </ItemGroup>
+
+</Project>
